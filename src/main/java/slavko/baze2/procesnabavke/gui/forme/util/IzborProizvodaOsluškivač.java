@@ -12,5 +12,5 @@ import slavko.baze2.procesnabavke.gui.domen.Proizvod;
  * @author Slavko
  */
 public interface IzborProizvodaOsluškivač {
-    public void proizvodIzabran(Proizvod proizvod, Integer količina);
+    void proizvodIzabran(Proizvod proizvod, Integer količina);
 }

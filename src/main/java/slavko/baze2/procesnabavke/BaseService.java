@@ -71,4 +71,13 @@ public abstract class BaseService<T, ID extends Serializable> {
 
         return t;
     }
+
+    @Transactional
+    public void delete(ID id) {
+        logger.debug("Deleting {} with id: {}", entityType.getSimpleName(), id);
+
+        repository.delete(id);
+
+        logger.debug("{} with id {} deleted", entityType.getSimpleName(), id);
+    }
 }

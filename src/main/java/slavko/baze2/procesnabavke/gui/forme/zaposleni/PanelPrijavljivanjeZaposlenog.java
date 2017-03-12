@@ -5,19 +5,25 @@
  */
 package slavko.baze2.procesnabavke.gui.forme.zaposleni;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import slavko.baze2.procesnabavke.gui.domen.Zaposleni;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import slavko.baze2.procesnabavke.gui.poslovnalogika.Kontroler;
+import slavko.baze2.procesnabavke.services.ZaposleniService;
+
+import javax.swing.*;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Slavko
  */
+@Component
+@Scope(value = "prototype")
 public class PanelPrijavljivanjeZaposlenog extends javax.swing.JPanel {
+
+    @Autowired
+    private ZaposleniService zaposleniService;
 
     /**
      * Creates new form PanelPrijavljivanjeZaposlenog
@@ -68,41 +74,41 @@ public class PanelPrijavljivanjeZaposlenog extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtxtKorisničkoIme, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                            .addComponent(jtxtŠifra)))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlblKorisničkoImeMandatory, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblŠifraMandatory, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jtxtKorisničkoIme, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                                                        .addComponent(jtxtŠifra)))
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jlblKorisničkoImeMandatory, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jlblŠifraMandatory, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtKorisničkoIme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblKorisničkoImeMandatory))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlblŠifraMandatory)
-                    .addComponent(jtxtŠifra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jtxtKorisničkoIme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jlblKorisničkoImeMandatory))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jlblŠifraMandatory)
+                                        .addComponent(jtxtŠifra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                                .addComponent(jButton1)
+                                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -110,37 +116,37 @@ public class PanelPrijavljivanjeZaposlenog extends javax.swing.JPanel {
         String korisničkoIme = jtxtKorisničkoIme.getText();
         String šifra = new String(jtxtŠifra.getPassword());
         boolean formValid = true;
-        
-        if(korisničkoIme.isEmpty() || korisničkoIme==null){
+
+        if (korisničkoIme.isEmpty() || korisničkoIme == null) {
             jlblKorisničkoImeMandatory.setVisible(true);
             formValid = false;
-        }else{
-         jlblKorisničkoImeMandatory.setVisible(false);
+        } else {
+            jlblKorisničkoImeMandatory.setVisible(false);
         }
-        if(šifra.isEmpty() || šifra==null){
+        if (šifra.isEmpty() || šifra == null) {
             jlblŠifraMandatory.setVisible(true);
             formValid = false;
-        }else{
+        } else {
             jlblŠifraMandatory.setVisible(false);
         }
-       
-        if(!formValid){
+
+        if (!formValid) {
             return;
         }
-        
+
         try {
-            Zaposleni zaposleni = Kontroler.vratiInstancu().pronadjiZaposlenog(korisničkoIme, šifra);
-            if(zaposleni==null){
-                JOptionPane.showMessageDialog(this, "Sistem nije uspeo da nađe zaposlenog sa zadatim kredencijalima","Greška",JOptionPane.ERROR_MESSAGE);
+            Zaposleni zaposleni = zaposleniService.getByUsernameAndPassword(korisničkoIme, šifra);
+            if (zaposleni == null) {
+                JOptionPane.showMessageDialog(this, "Sistem nije uspeo da nađe zaposlenog sa zadatim kredencijalima", "Greška", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             slavko.baze2.procesnabavke.gui.util.Util.vratiInstancu().postavi("prijavljeni_korisnik", zaposleni);
-            JOptionPane.showMessageDialog(this, "Uspešno prijavljivanje","Prijavljivanje",JOptionPane.INFORMATION_MESSAGE);
-            ((JDialog)SwingUtilities.getWindowAncestor(this)).dispose();
+            JOptionPane.showMessageDialog(this, "Uspešno prijavljivanje", "Prijavljivanje", JOptionPane.INFORMATION_MESSAGE);
+            ((JDialog) SwingUtilities.getWindowAncestor(this)).dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(),"Greška",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -159,5 +165,5 @@ public class PanelPrijavljivanjeZaposlenog extends javax.swing.JPanel {
         jlblŠifraMandatory.setVisible(false);
     }
 
- 
+
 }

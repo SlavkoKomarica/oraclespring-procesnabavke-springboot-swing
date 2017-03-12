@@ -5,31 +5,27 @@
  */
 package slavko.baze2.procesnabavke.gui.forme.proizvod;
 
-import slavko.baze2.procesnabavke.gui.domen.PDVStopa;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import slavko.baze2.procesnabavke.gui.domen.Proizvod;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFormattedTextField.AbstractFormatter;
-import javax.swing.JFormattedTextField.AbstractFormatterFactory;
-import javax.swing.JOptionPane;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.InternationalFormatter;
-import javax.swing.text.NumberFormatter;
-import slavko.baze2.procesnabavke.gui.poslovnalogika.Kontroler;
 import slavko.baze2.procesnabavke.gui.util.Util;
+import slavko.baze2.procesnabavke.services.ProizvodService;
+
+import javax.swing.*;
+import javax.swing.text.NumberFormatter;
+import java.text.NumberFormat;
+import org.springframework.context.annotation.Scope;
 
 /**
  *
  * @author Slavko
  */
+@Component
+@Scope(value = "prototype")
 public class PanelRadSaProizvodom extends javax.swing.JPanel {
+
+    @Autowired
+    private ProizvodService proizvodService;
 
     /**
      * Creates new form PanelRadSaProizvodom
@@ -51,67 +47,43 @@ public class PanelRadSaProizvodom extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jtxtBrProizvoda = new javax.swing.JTextField();
         jtxtNazivProizvoda = new javax.swing.JTextField();
-        jtxtMernaJedinica = new javax.swing.JTextField();
-        jcbPdvStopa = new javax.swing.JComboBox();
-        jbtnSačuvajProizvod = new javax.swing.JButton();
-        jftxtCena = new javax.swing.JFormattedTextField();
         jlblNazivProizvodaValidator = new javax.swing.JLabel();
-        jlblMernaJedinicaValidator = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jftxtStanje = new javax.swing.JFormattedTextField();
-        jbtnIzmeniProizvod = new javax.swing.JButton();
+        jlblSifraProizvodaValidator = new javax.swing.JLabel();
+        sacuvajButton = new javax.swing.JButton();
+        izmeniButton = new javax.swing.JButton();
 
         setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel1.setText("Naziv proizvoda:");
 
-        jLabel2.setText("Cena:");
+        jLabel4.setText("Sifra proizvoda");
 
-        jLabel3.setText("Merna jedinica:");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("Broj proizvoda:");
-
-        jLabel5.setText("PDV Stopa:");
-
-        jtxtBrProizvoda.setEditable(false);
-        jtxtBrProizvoda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtxtBrProizvoda.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jtxtBrProizvoda.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jtxtBrProizvoda.setEnabled(false);
-
-        jcbPdvStopa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jbtnSačuvajProizvod.setText("Sačuvaj proizvod");
-        jbtnSačuvajProizvod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnSačuvajProizvodActionPerformed(evt);
-            }
-        });
-
-        jftxtCena.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
         jlblNazivProizvodaValidator.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jlblNazivProizvodaValidator.setForeground(new java.awt.Color(255, 0, 0));
         jlblNazivProizvodaValidator.setText("*");
 
-        jlblMernaJedinicaValidator.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jlblMernaJedinicaValidator.setForeground(new java.awt.Color(255, 0, 0));
-        jlblMernaJedinicaValidator.setText("*");
+        jlblSifraProizvodaValidator.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlblSifraProizvodaValidator.setForeground(new java.awt.Color(255, 0, 0));
+        jlblSifraProizvodaValidator.setText("*");
 
-        jLabel6.setText("Stanje");
-
-        jftxtStanje.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-
-        jbtnIzmeniProizvod.setText("Izmeni proizvod");
-        jbtnIzmeniProizvod.addActionListener(new java.awt.event.ActionListener() {
+        sacuvajButton.setText("Sacuvaj");
+        sacuvajButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnIzmeniProizvodActionPerformed(evt);
+                sacuvajButtonActionPerformed(evt);
+            }
+        });
+
+        izmeniButton.setText("Izmeni");
+        izmeniButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                izmeniButtonActionPerformed(evt);
             }
         });
 
@@ -122,242 +94,152 @@ public class PanelRadSaProizvodom extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtxtNazivProizvoda)
-                                    .addComponent(jcbPdvStopa, 0, 239, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jlblNazivProizvodaValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jftxtCena, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtxtMernaJedinica, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                                    .addComponent(jftxtStanje))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jlblMernaJedinicaValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
+                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbtnSačuvajProizvod, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                            .addComponent(jbtnIzmeniProizvod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(203, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jtxtBrProizvoda, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(185, 185, 185))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(207, 207, 207))))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtxtBrProizvoda)
+                            .addComponent(jtxtNazivProizvoda, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlblNazivProizvodaValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblSifraProizvodaValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(193, 193, 193)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(izmeniButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sacuvajButton, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtxtBrProizvoda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtBrProizvoda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlblSifraProizvodaValidator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jlblNazivProizvodaValidator, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                        .addComponent(jlblNazivProizvodaValidator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(jtxtNazivProizvoda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jcbPdvStopa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(sacuvajButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jftxtCena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtxtMernaJedinica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jlblMernaJedinicaValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jftxtStanje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbtnSačuvajProizvod)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbtnIzmeniProizvod)
-                .addGap(12, 12, 12))
+                .addComponent(izmeniButton)
+                .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtnSačuvajProizvodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSačuvajProizvodActionPerformed
-        if (!validirajUnosProizvoda()) {
+    private void sacuvajButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sacuvajButtonActionPerformed
+       sacuvajProizvod();
+    }//GEN-LAST:event_sacuvajButtonActionPerformed
+
+    private void izmeniButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_izmeniButtonActionPerformed
+        izmeniProizvod();
+    }//GEN-LAST:event_izmeniButtonActionPerformed
+
+    private void sacuvajProizvod(){
+    if (!validirajUnosProizvoda()) {
             return;
         }
+
         String naziv = jtxtNazivProizvoda.getText();
-        String mernaJedinica = jtxtMernaJedinica.getText();
-
-        String cena = jftxtCena.getText();
-        Double cenaDouble = Double.parseDouble(cena.replace(",", ""));
-
-        String stanje = jftxtStanje.getText();
-        Integer stanjeInteger = Integer.parseInt(stanje.replace(",", ""));
-
-        PDVStopa pdvStopa = (PDVStopa) jcbPdvStopa.getSelectedItem();
+        Long sifra = Long.parseLong(jtxtBrProizvoda.getText());
 
         try {
-            String klasBrojProizvoda = Kontroler.vratiInstancu().generisiKlasBrojProizvoda();
-            Proizvod p = new Proizvod(null, klasBrojProizvoda, naziv, cenaDouble, mernaJedinica, stanjeInteger, pdvStopa);
-            Kontroler.vratiInstancu().dodajProizvod(p);
-            jtxtBrProizvoda.setText(klasBrojProizvoda);
+            Proizvod proizvod = new Proizvod.Builder()
+                    .withSifra(sifra)
+                    .withNaziv(naziv).build();
+            proizvodService.create(proizvod);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        JOptionPane.showMessageDialog(this, "Sistem je zapamtio proizvod", "Čuvanje proizvoda", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jbtnSačuvajProizvodActionPerformed
-
-    private void jbtnIzmeniProizvodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIzmeniProizvodActionPerformed
+        JOptionPane.showMessageDialog(this, "Sistem je zapamtio proizvod", "Čuvanje proizvoda", JOptionPane.INFORMATION_MESSAGE);}
+    
+    private void izmeniProizvod(){
         if (!validirajUnosProizvoda()) {
             return;
         }
-        String cena = jftxtCena.getText();
-        Double cenaDouble = Double.parseDouble(cena.replace(",", ""));
 
-        String stanje = jftxtStanje.getText();
-        Integer stanjeInteger = Integer.parseInt(stanje.replace(",", ""));
-
-        PDVStopa pdvStopa = (PDVStopa) jcbPdvStopa.getSelectedItem();
-
-        izabraniProizvod.setCenaBezPDVa(cenaDouble);
-        izabraniProizvod.setStanje(stanjeInteger);
-        izabraniProizvod.setPdvStopa(pdvStopa);
+        String naziv = jtxtNazivProizvoda.getText();
+        izabraniProizvod.setNaziv(naziv);
 
         try {
-            Kontroler.vratiInstancu().izmeniProizvod(izabraniProizvod);
+            proizvodService.update(izabraniProizvod.getSifra(), izabraniProizvod);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         JOptionPane.showMessageDialog(this, "Sistem je zapamtio proizvod", "Izmena proizvoda", JOptionPane.INFORMATION_MESSAGE);
-
-    }//GEN-LAST:event_jbtnIzmeniProizvodActionPerformed
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton izmeniButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JButton jbtnIzmeniProizvod;
-    private javax.swing.JButton jbtnSačuvajProizvod;
-    private javax.swing.JComboBox jcbPdvStopa;
-    private javax.swing.JFormattedTextField jftxtCena;
-    private javax.swing.JFormattedTextField jftxtStanje;
-    private javax.swing.JLabel jlblMernaJedinicaValidator;
     private javax.swing.JLabel jlblNazivProizvodaValidator;
+    private javax.swing.JLabel jlblSifraProizvodaValidator;
     private javax.swing.JTextField jtxtBrProizvoda;
-    private javax.swing.JTextField jtxtMernaJedinica;
     private javax.swing.JTextField jtxtNazivProizvoda;
+    private javax.swing.JButton sacuvajButton;
     // End of variables declaration//GEN-END:variables
 
     private void srediFormu() {
-         jftxtCena.setFormatterFactory(new AbstractFormatterFactory() {
-
-            @Override
-            public AbstractFormatter getFormatter(JFormattedTextField tf) {
-                NumberFormat format = DecimalFormat.getInstance();
-                format.setMinimumFractionDigits(1);
-                format.setMaximumFractionDigits(2);
-                format.setRoundingMode(RoundingMode.HALF_UP);
-                InternationalFormatter formatter = new InternationalFormatter(format);
-                formatter.setAllowsInvalid(false);
-                formatter.setMinimum(1.0);
-                formatter.setMaximum(1000000.00);
-                return formatter;
-            }
-        });
-        jftxtCena.setValue(1.0);
-        
-
-        NumberFormatter formatterStanje = new NumberFormatter(NumberFormat.getInstance());
-
-        formatterStanje.setMinimum(0);
-        formatterStanje.setMaximum(10000000);
-        formatterStanje.setValueClass(Integer.class);
-        formatterStanje.setAllowsInvalid(false);
-        jftxtStanje.setFormatterFactory(new DefaultFormatterFactory(formatterStanje));
-        jftxtStanje.setValue(0);
-
-        jlblMernaJedinicaValidator.setVisible(false);
+        jlblSifraProizvodaValidator.setVisible(false);
         jlblNazivProizvodaValidator.setVisible(false);
-
-        List<PDVStopa> listaPDVStopa = new ArrayList<>();
-        try {
-            listaPDVStopa = Kontroler.vratiInstancu().vratiListuPDVStopa();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
-        }
-        jcbPdvStopa.setModel(new DefaultComboBoxModel(listaPDVStopa.toArray()));
 
         izabraniProizvod = (Proizvod) Util.vratiInstancu().vrati("izabrani_proizvod");
         if (izabraniProizvod != null) {
             // Operacija promena proizvoda                
-            jbtnSačuvajProizvod.setVisible(false);
-            jtxtBrProizvoda.setText(izabraniProizvod.getKlasifikacioniBroj());
-            jtxtMernaJedinica.setText(izabraniProizvod.getMernaJedinica());
+            sacuvajButton.setVisible(false);
+            izmeniButton.setVisible(true);
+            jtxtBrProizvoda.setEnabled(false);
+            jtxtBrProizvoda.setEditable(false);
+
+            jtxtBrProizvoda.setText(izabraniProizvod.getSifra().toString());
             jtxtNazivProizvoda.setText(izabraniProizvod.getNaziv());
-            jftxtCena.setValue(izabraniProizvod.getCenaBezPDVa());
-            jftxtStanje.setValue(izabraniProizvod.getStanje());
-            jcbPdvStopa.setSelectedItem(izabraniProizvod.getPdvStopa());
-
-            jtxtNazivProizvoda.setEnabled(false);
-            jtxtMernaJedinica.setEnabled(false);
-
             Util.vratiInstancu().obriši("izabrani_proizvod");
         } else {
-            jbtnIzmeniProizvod.setVisible(false);
+            izmeniButton.setVisible(false);
+            sacuvajButton.setVisible(true);
+            jtxtBrProizvoda.setEnabled(true);
+            jtxtBrProizvoda.setEditable(true);
         }
 
     }
 
     private boolean validirajUnosProizvoda() {
         boolean valid = true;
+        jlblNazivProizvodaValidator.setVisible(false);
 
         String naziv = jtxtNazivProizvoda.getText();
         if (naziv == null || naziv.isEmpty()) {
             valid = false;
             jlblNazivProizvodaValidator.setVisible(true);
-        } else {
-            jlblNazivProizvodaValidator.setVisible(false);
         }
 
-        String mernaJedinica = jtxtMernaJedinica.getText();
-        if (mernaJedinica == null || mernaJedinica.isEmpty()) {
+        String sifra = jtxtBrProizvoda.getText();
+        if (sifra == null || sifra.isEmpty()) {
             valid = false;
-            jlblMernaJedinicaValidator.setVisible(true);
+            jlblNazivProizvodaValidator.setVisible(true);
         } else {
-            jlblMernaJedinicaValidator.setVisible(false);
+            try {
+                Long.parseLong(sifra);
+            } catch (Exception e) {
+                valid = false;
+                jlblNazivProizvodaValidator.setVisible(true);
+            }
         }
 
-        if (!valid) {
-            return false;
-        }
-        return true;
+        return valid;
     }
 }

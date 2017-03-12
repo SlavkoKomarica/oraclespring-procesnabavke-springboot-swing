@@ -1,5 +1,6 @@
 package slavko.baze2.procesnabavke.domain;
 
+import slavko.baze2.procesnabavke.gui.domen.Zaposleni;
 import lombok.ToString;
 
 import javax.persistence.*;

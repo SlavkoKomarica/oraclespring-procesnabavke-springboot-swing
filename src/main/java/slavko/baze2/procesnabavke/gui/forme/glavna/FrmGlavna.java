@@ -5,21 +5,19 @@
  */
 package slavko.baze2.procesnabavke.gui.forme.glavna;
 
-import slavko.baze2.procesnabavke.gui.forme.zaposleni.PanelPrijavljivanjeZaposlenog;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import slavko.baze2.procesnabavke.gui.domen.Zaposleni;
-import slavko.baze2.procesnabavke.gui.forme.proizvod.PanelPretragaProizvoda;
-import slavko.baze2.procesnabavke.gui.forme.proizvod.PanelRadSaProizvodom;
 import slavko.baze2.procesnabavke.gui.forme.faktura.PanelPretragaFaktura;
 import slavko.baze2.procesnabavke.gui.forme.faktura.PanelRadSaFakturom;
-import java.awt.BorderLayout;
+import slavko.baze2.procesnabavke.gui.forme.proizvod.PanelPretragaProizvoda;
+import slavko.baze2.procesnabavke.gui.forme.proizvod.PanelRadSaProizvodom;
+import slavko.baze2.procesnabavke.gui.forme.zaposleni.PanelPrijavljivanjeZaposlenog;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import org.springframework.beans.factory.annotation.Autowired;
-import slavko.baze2.procesnabavke.gui.poslovnalogika.Kontroler;
-import slavko.baze2.procesnabavke.services.ProizvodService;
 
 /**
  *
@@ -28,7 +26,7 @@ import slavko.baze2.procesnabavke.services.ProizvodService;
 public class FrmGlavna extends javax.swing.JFrame {
 
     @Autowired
-    private ProizvodService proizvodService;
+    private BeanFactory beanFactory;
 
     /**
      * Creates new form FrmGlavna
@@ -85,7 +83,7 @@ public class FrmGlavna extends javax.swing.JFrame {
         });
         getContentPane().add(jbtnPrijavljivanje, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 140, 50));
 
-        jmUpravljanjeFakturama.setText("Upravljanje fakturama");
+        jmUpravljanjeFakturama.setText("Fakture");
 
         jmiPregledFaktura.setText("Pregled");
         jmiPregledFaktura.addActionListener(new java.awt.event.ActionListener() {
@@ -105,7 +103,7 @@ public class FrmGlavna extends javax.swing.JFrame {
 
         jmbGlavniMeni.add(jmUpravljanjeFakturama);
 
-        jmUpravljanjeProizvodima.setText("Upravljanje proizvodima");
+        jmUpravljanjeProizvodima.setText("Proizvodi");
 
         jmiPregledProizvoda.setText("Pregled");
         jmiPregledProizvoda.addActionListener(new java.awt.event.ActionListener() {
@@ -132,11 +130,11 @@ public class FrmGlavna extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiUnosProizvodaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiUnosProizvodaActionPerformed
-        otvoriDialog("Unos proizvoda", new PanelRadSaProizvodom());
+        otvoriDialog("Unos proizvoda", beanFactory.getBean(PanelRadSaProizvodom.class));
     }//GEN-LAST:event_jmiUnosProizvodaActionPerformed
 
     private void jmiPregledProizvodaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPregledProizvodaActionPerformed
-        otvoriDialog("Pregled proizvoda", new PanelPretragaProizvoda());
+        otvoriDialog("Pregled proizvoda", beanFactory.getBean(PanelPretragaProizvoda.class));
     }//GEN-LAST:event_jmiPregledProizvodaActionPerformed
 
     private void jmiUnosFaktureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiUnosFaktureActionPerformed
@@ -148,13 +146,11 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiPregledFakturaActionPerformed
 
     private void jbtnPrijavljivanjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPrijavljivanjeActionPerformed
-        System.out.println("Autowiring: " + proizvodService);
-
         if (jbtnPrijavljivanje.getText().equals("Odjavljivanje")) {
             slavko.baze2.procesnabavke.gui.util.Util.vratiInstancu().obriši("prijavljeni_korisnik");
             srediFormu();
         } else {
-            JDialog dialog = otvoriDialog("Prijavljivanje zaposlenog", new PanelPrijavljivanjeZaposlenog());
+            JDialog dialog = otvoriDialog("Prijavljivanje zaposlenog", beanFactory.getBean(PanelPrijavljivanjeZaposlenog.class));
             dialog.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
@@ -163,51 +159,6 @@ public class FrmGlavna extends javax.swing.JFrame {
             });
         }
     }//GEN-LAST:event_jbtnPrijavljivanjeActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmGlavna.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmGlavna.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmGlavna.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmGlavna.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmGlavna().setVisible(true);
-            }
-        });
-    }
-
-    private JDialog otvoriDialog(String naziv, JPanel panel) {
-        JDialog dialog = new JDialog(this, naziv, true);
-        dialog.setLayout(new BorderLayout());
-        dialog.add(panel, BorderLayout.CENTER);
-        dialog.pack();
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-        return dialog;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbtnPrijavljivanje;
@@ -226,7 +177,7 @@ public class FrmGlavna extends javax.swing.JFrame {
         Zaposleni zaposleni = (Zaposleni) slavko.baze2.procesnabavke.gui.util.Util.vratiInstancu().vrati("prijavljeni_korisnik");
         if (zaposleni != null) {
             jlblDobrodošli.setVisible(true);
-            jlblImePrezime.setText(zaposleni.toString());
+            jlblImePrezime.setText(zaposleni.printInfo());
             jlblImePrezime.setVisible(true);
             jmiPregledFaktura.setEnabled(true);
             jmiPregledProizvoda.setEnabled(true);
@@ -242,5 +193,15 @@ public class FrmGlavna extends javax.swing.JFrame {
             jmiUnosProizvoda.setEnabled(false);
             jbtnPrijavljivanje.setText("Prijavljivanje");
         }
+    }
+
+    private JDialog otvoriDialog(String naziv, JPanel panel) {
+        JDialog dialog = new JDialog(this, naziv, true);
+        dialog.setLayout(new BorderLayout());
+        dialog.add(panel, BorderLayout.CENTER);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+        return dialog;
     }
 }

@@ -1,6 +1,8 @@
 package slavko.baze2.procesnabavke.services;
 
+import slavko.baze2.procesnabavke.gui.domen.Proizvod;
 import slavko.baze2.procesnabavke.domain.*;
+import slavko.baze2.procesnabavke.gui.domen.Zaposleni;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -25,6 +27,8 @@ public class ServicesFixture {
 
     public static final long STANDARD_SIFRA_ZAPOSLENOG = 1l;
     public static final String STANDARD_IME_ZAPOSLENOG = "Pera";
+    public static final String STANDARD_KORISNICKO_IME_ZAPOSLENOG = "admin";
+    public static final String STANDARD_KORISNICKA_SIFRA_ZAPOSLENOG = "123";
     public static final String STANDARD_PREZIME_ZAPOSLENOG = "Peric";
     public static final Jmbg STANDARD_JMBG_ZAPOSLENOG = new Jmbg("0212995654823");
 
@@ -94,7 +98,13 @@ public class ServicesFixture {
     }
 
     public static Zaposleni standardZaposleni() {
-        return new Zaposleni(STANDARD_SIFRA_ZAPOSLENOG, STANDARD_IME_ZAPOSLENOG, STANDARD_PREZIME_ZAPOSLENOG, STANDARD_JMBG_ZAPOSLENOG);
+        return new Zaposleni.Builder()
+                .withSifra(STANDARD_SIFRA_ZAPOSLENOG)
+                .withIme(STANDARD_IME_ZAPOSLENOG)
+                .withPrezime(STANDARD_PREZIME_ZAPOSLENOG)
+                .withJmbg(STANDARD_JMBG_ZAPOSLENOG)
+                .withKorisnickoIme(STANDARD_KORISNICKO_IME_ZAPOSLENOG)
+                .withKorisnickaSifra(STANDARD_KORISNICKA_SIFRA_ZAPOSLENOG).build();
     }
 
     public static Narudzbenica standardNarudzbenica() {

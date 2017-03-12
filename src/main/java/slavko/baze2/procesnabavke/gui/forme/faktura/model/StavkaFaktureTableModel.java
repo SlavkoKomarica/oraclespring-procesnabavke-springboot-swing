@@ -49,7 +49,7 @@ public class StavkaFaktureTableModel extends AbstractTableModel {
             case 1:
                 return stavka.getProizvod().getNaziv();
             case 2:
-                return stavka.getProizvod().getMernaJedinica();
+                return null;
             case 3:
                 return stavka.getKoličina();
             case 4:
@@ -111,7 +111,7 @@ public class StavkaFaktureTableModel extends AbstractTableModel {
             }
         }
         
-        StavkaFakture stavka = new StavkaFakture(faktura.getStavke().size() + 1, količina, proizvod.getCenaBezPDVa(), 0d, 0d, proizvod);
+        StavkaFakture stavka = new StavkaFakture(faktura.getStavke().size() + 1, količina, null, 0d, 0d, proizvod);
         faktura.getStavke().add(stavka);
         fireTableDataChanged();
     }

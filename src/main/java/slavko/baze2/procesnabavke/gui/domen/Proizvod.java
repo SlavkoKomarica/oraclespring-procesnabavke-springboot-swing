@@ -1,53 +1,56 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package slavko.baze2.procesnabavke.gui.domen;
 
-import java.util.Objects;
+import lombok.ToString;
+import slavko.baze2.procesnabavke.BaseEntity;
+
+import javax.persistence.*;
+import slavko.baze2.procesnabavke.domain.JedinicaMere;
+import slavko.baze2.procesnabavke.domain.TipProizvoda;
 
 /**
- *
- * @author Slavko
+ * @author Slavko Komarica
  */
-public class Proizvod {
+@Entity
+@Table(name = "proizvod")
+@ToString
+public class Proizvod extends BaseEntity {
 
-    private Long proizvodID;
-    private String klasifikacioniBroj;
+    @Column
     private String naziv;
-    private Double cenaBezPDVa;
-    private String mernaJedinica;
-    private Integer stanje;
-    private PDVStopa pdvStopa;
+
+    @Column(name = "akt_cena")
+    private Double aktCena;
+
+    @Column
+    private String opis;
+
+    @Column(name = "sifra_tipa_proizvoda")
+    private Long sifraTipaProizvoda;
+
+    @ManyToOne
+    @JoinColumn(name = "sifra_tipa_proizvoda", insertable = false, updatable = false)
+    private TipProizvoda tipProizvoda;
+
+    @Column(name = "sifra_jedinice_mere")
+    private Long sifraJediniceMere;
+
+    @ManyToOne
+    @JoinColumn(name = "sifra_jedinice_mere", insertable = false, updatable = false)
+    private JedinicaMere jedinicaMere;
+
 
     public Proizvod() {
     }
 
-    public Proizvod(Long proizvodID, String klasifikacioniBroj, String naziv, Double cenaBezPDVa, String mernaJedinica, Integer stanje, PDVStopa pdvStopa) {
-        this.proizvodID = proizvodID;
-        this.klasifikacioniBroj = klasifikacioniBroj;
-        this.naziv = naziv;
-        this.cenaBezPDVa = cenaBezPDVa;
-        this.mernaJedinica = mernaJedinica;
-        this.stanje = stanje;
-        this.pdvStopa = pdvStopa;
-    }
-
-    public Long getProizvodID() {
-        return proizvodID;
-    }
-
-    public void setProizvodID(Long proizvodID) {
-        this.proizvodID = proizvodID;
-    }
-
-    public String getKlasifikacioniBroj() {
-        return klasifikacioniBroj;
-    }
-
-    public void setKlasifikacioniBroj(String klasifikacioniBroj) {
-        this.klasifikacioniBroj = klasifikacioniBroj;
+    private Proizvod(Builder builder) {
+        setSifra(builder.sifra);
+        setNaziv(builder.naziv);
+        setAktCena(builder.aktCena);
+        setOpis(builder.opis);
+        setSifraTipaProizvoda(builder.sifraTipaProizvoda);
+        setTipProizvoda(builder.tipProizvoda);
+        setSifraJediniceMere(builder.sifraJediniceMere);
+        setJedinicaMere(builder.jedinicaMere);
     }
 
     public String getNaziv() {
@@ -58,59 +61,110 @@ public class Proizvod {
         this.naziv = naziv;
     }
 
-    public Double getCenaBezPDVa() {
-        return cenaBezPDVa;
+    public Double getAktCena() {
+        return aktCena;
     }
 
-    public void setCenaBezPDVa(Double cenaBezPDVa) {
-        this.cenaBezPDVa = cenaBezPDVa;
+    public void setAktCena(Double aktCena) {
+        this.aktCena = aktCena;
     }
 
-    public String getMernaJedinica() {
-        return mernaJedinica;
+    public String getOpis() {
+        return opis;
     }
 
-    public void setMernaJedinica(String mernaJedinica) {
-        this.mernaJedinica = mernaJedinica;
+    public void setOpis(String opis) {
+        this.opis = opis;
     }
 
-    public Integer getStanje() {
-        return stanje;
+    public Long getSifraTipaProizvoda() {
+        return sifraTipaProizvoda;
     }
 
-    public void setStanje(Integer stanje) {
-        this.stanje = stanje;
+    public void setSifraTipaProizvoda(Long sifraTipaProizvoda) {
+        this.sifraTipaProizvoda = sifraTipaProizvoda;
     }
 
-    public PDVStopa getPdvStopa() {
-        return pdvStopa;
+    public TipProizvoda getTipProizvoda() {
+        return tipProizvoda;
     }
 
-    public void setPdvStopa(PDVStopa pdvStopa) {
-        this.pdvStopa = pdvStopa;
+    public void setTipProizvoda(TipProizvoda tipProizvoda) {
+        this.tipProizvoda = tipProizvoda;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        return hash;
+    public Long getSifraJediniceMere() {
+        return sifraJediniceMere;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
+    public void setSifraJediniceMere(Long sifraJediniceMere) {
+        this.sifraJediniceMere = sifraJediniceMere;
+    }
+
+    public JedinicaMere getJedinicaMere() {
+        return jedinicaMere;
+    }
+
+    public void setJedinicaMere(JedinicaMere jedinicaMere) {
+        this.jedinicaMere = jedinicaMere;
+    }
+
+
+    public static final class Builder {
+        private Long sifra;
+        private String naziv;
+        private Double aktCena;
+        private String opis;
+        private Long sifraTipaProizvoda;
+        private TipProizvoda tipProizvoda;
+        private Long sifraJediniceMere;
+        private JedinicaMere jedinicaMere;
+
+        public Builder() {
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Proizvod other = (Proizvod) obj;
-        if (!Objects.equals(this.proizvodID, other.proizvodID)) {
-            return false;
-        }
-        return true;
-    }
-    
-    
 
+        public Builder withSifra(Long val) {
+            sifra = val;
+            return this;
+        }
+
+        public Builder withNaziv(String val) {
+            naziv = val;
+            return this;
+        }
+
+        public Builder withAktCena(Double val) {
+            aktCena = val;
+            return this;
+        }
+
+        public Builder withOpis(String val) {
+            opis = val;
+            return this;
+        }
+
+        public Builder withSifraTipaProizvoda(Long val) {
+            sifraTipaProizvoda = val;
+            return this;
+        }
+
+        public Builder withTipProizvoda(TipProizvoda val) {
+            tipProizvoda = val;
+            return this;
+        }
+
+        public Builder withSifraJediniceMere(Long val) {
+            sifraJediniceMere = val;
+            return this;
+        }
+
+        public Builder withJedinicaMere(JedinicaMere val) {
+            jedinicaMere = val;
+            return this;
+        }
+
+        public Proizvod build() {
+            return new Proizvod(this);
+        }
+    }
 }

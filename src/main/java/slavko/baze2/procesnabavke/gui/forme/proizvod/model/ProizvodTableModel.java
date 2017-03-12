@@ -21,7 +21,7 @@ import javax.swing.table.AbstractTableModel;
 public class ProizvodTableModel extends AbstractTableModel {
 
     private List<Proizvod> lp = new ArrayList<>();
-    private final String[] kolone = new String[]{"Klas. broj", "Naziv", "Cena", "M.J.", "PDV stopa", "Stanje"};
+    private final String[] kolone = new String[]{"Sifra", "Naziv"};
 
     public ProizvodTableModel(List<Proizvod> lp) {
         this.lp = lp;
@@ -42,21 +42,9 @@ public class ProizvodTableModel extends AbstractTableModel {
         Proizvod proizvod = lp.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return proizvod.getKlasifikacioniBroj();
+                return proizvod.getSifra();
             case 1:
                 return proizvod.getNaziv();
-            case 2:
-                return proizvod.getCenaBezPDVa() + " din";
-            case 3:
-                return proizvod.getMernaJedinica();
-            case 4:
-                if (proizvod.getPdvStopa() != null) {
-                    return proizvod.getPdvStopa().getNaziv() + "(" + proizvod.getPdvStopa().getProcenat() + "%)";
-                } else {
-                    return "";
-                }
-            case 5:
-                return proizvod.getStanje();
             default:
                 return "n/a";
         }

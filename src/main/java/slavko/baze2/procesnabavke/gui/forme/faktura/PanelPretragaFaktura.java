@@ -292,7 +292,7 @@ public class PanelPretragaFaktura extends javax.swing.JPanel {
                     } else {
                         Double netoIznos = 0.0;
                         for (StavkaFakture stavkaFakture : p.getStavke()) {
-                            netoIznos += stavkaFakture.getProizvod().getCenaBezPDVa() * stavkaFakture.getKoličina();
+//                            netoIznos += stavkaFakture.getProizvod().getCenaBezPDVa() * stavkaFakture.getKoličina();
                         }
                         if (!(netoIznos >= vrednostIznadDouble)) {
                             continue;
@@ -307,7 +307,7 @@ public class PanelPretragaFaktura extends javax.swing.JPanel {
                     } else {
                         Double netoIznos = 0.0;
                         for (StavkaFakture stavkaFakture : p.getStavke()) {
-                            netoIznos += stavkaFakture.getProizvod().getCenaBezPDVa() * stavkaFakture.getKoličina();
+//                            netoIznos += stavkaFakture.getProizvod().getCenaBezPDVa() * stavkaFakture.getKoličina();
                         }
                         if (!(netoIznos <= vrednostIspodDouble)) {
                             continue;

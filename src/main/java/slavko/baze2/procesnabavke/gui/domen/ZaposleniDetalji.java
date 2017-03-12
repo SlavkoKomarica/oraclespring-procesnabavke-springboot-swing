@@ -1,8 +1,9 @@
-package slavko.baze2.procesnabavke.domain;
+package slavko.baze2.procesnabavke.gui.domen;
 
 import lombok.ToString;
 
 import javax.persistence.*;
+import slavko.baze2.procesnabavke.domain.Opstina;
 
 /**
  * @author Slavko Komarica

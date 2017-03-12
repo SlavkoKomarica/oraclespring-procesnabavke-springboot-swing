@@ -6,7 +6,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jmUpravljanjeFakturama">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Upravljanje fakturama"/>
+            <Property name="text" type="java.lang.String" value="Fakture"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmiPregledFaktura">
@@ -29,7 +29,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jmUpravljanjeProizvodima">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Upravljanje proizvodima"/>
+            <Property name="text" type="java.lang.String" value="Proizvodi"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmiPregledProizvoda">
